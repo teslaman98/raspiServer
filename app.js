@@ -8,6 +8,13 @@ const logger = require('./middleware/logger')
 
 app.use(logger)
 
+
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
+
+
 // Gets api
 app.get('/api', (req, res) => {
 	res.setHeader('Content-Type', 'text/html')
@@ -30,8 +37,12 @@ app.get('/api/video', (req,res) => {
 
 app.get('/api/music', (req,res) => {
 	res.sendFile('/home/pi/Documents/node/nodeExpress/public/music/music.html');
-	console.log('Sending...');
 });
+app.get('/api/music/ellieGoulding/ellie-goulding-tessellate.mp3', (req,res) => {
+    res.sendFile('/home/pi/Documents/node/nodeExpress/public/music/ellieGoulding/ellie-goulding-tessellate.mp3');
+    console.log('Sending...');
+});
+
 
 // app.get('/',function(req,res) {
 //   res.sendFile(path.join(__dirname, 'public', 'index.html'));
@@ -40,7 +51,7 @@ app.get('/api/music', (req,res) => {
 
 app.use(express.static(path.join(__dirname, 'public')))
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 
 
 
